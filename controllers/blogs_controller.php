@@ -15,7 +15,13 @@
    		case 'add':
    			$controller->add();
    			break;
-   		
+   		case 'show':
+   			$controller->show($id);
+   			break;
+   		case 'create':
+   			//var_dump($_POST);
+   			$controller->create($_POST);
+   			break;
    		default:
    			# code...
    			break;
@@ -34,6 +40,36 @@
 
      function add(){
      	// echo 'add()が呼び出されました。<br />';
+     	$action = 'add';
+       // var_dump($viewOptions);
+       require('views/layout/application.php');
+
+     }
+
+     function create($blog_data){
+     	//echo 'createメソッドが呼ばれました';
+
+     	//モデルを呼び出す
+     	$blog = new Blog();
+
+     	//モデルのcreateメソッドを実行する（モデルのcreateメソッドは、insert文を実行してブログを保存する）
+     	$return = $blog->create($blog_data);
+
+     	header('Location: /seed_blog/blogs/index');
+
+     }
+
+    function show($id){
+     	//モデルを呼び出す
+
+    	//モデルのshowメソッドを実行する（モデルのshowメソッドは、select文を実行してidで指定したブログデータを取得する）
+    	//モデルのshowメソッドに$idを引数として渡す
+    	//モデルのshowメソッドから返ってきた取得結果を、変数に格納
+
+     	$action = 'show';
+       // var_dump($viewOptions);
+       require('views/layout/application.php');
+
      }
    }
 ?>
