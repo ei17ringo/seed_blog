@@ -22,6 +22,9 @@
    			//var_dump($_POST);
    			$controller->create($_POST);
    			break;
+      case 'edit':
+        $controller->edit($id);
+        break;
    		default:
    			# code...
    			break;
@@ -61,14 +64,24 @@
 
     function show($id){
      	//モデルを呼び出す
+      $blog = new Blog();
 
     	//モデルのshowメソッドを実行する（モデルのshowメソッドは、select文を実行してidで指定したブログデータを取得する）
     	//モデルのshowメソッドに$idを引数として渡す
     	//モデルのshowメソッドから返ってきた取得結果を、変数に格納
+      $viewOptions = $blog->show($id);
 
      	$action = 'show';
        // var_dump($viewOptions);
        require('views/layout/application.php');
+
+     }
+
+     function edit($id){
+      //モデルを呼び出す
+      //モデルのeditメソッドを実行する（モデルのeditメソッドは、select文を実行してidで指定したブログデータを取得する）
+      //モデルのeditメソッドに$idを引数として渡す
+      //モデルのeditメソッドから返ってきた取得結果を、変数に格納
 
      }
    }
