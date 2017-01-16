@@ -25,6 +25,12 @@
       case 'edit':
         $controller->edit($id);
         break;
+      case 'update':
+        $controller->update($id,$_POST);
+        break;
+      case 'delete':
+        $controller->delete($id);
+        break;
    		default:
    			# code...
    			break;
@@ -79,10 +85,36 @@
 
      function edit($id){
       //モデルを呼び出す
+      $blog = new Blog();
+
       //モデルのeditメソッドを実行する（モデルのeditメソッドは、select文を実行してidで指定したブログデータを取得する）
       //モデルのeditメソッドに$idを引数として渡す
       //モデルのeditメソッドから返ってきた取得結果を、変数に格納
+      $viewOptions = $blog->edit($id);
 
+      $action = 'edit';
+
+      require('views/layout/application.php');
+     }
+
+     function update($id,$blog_data){
+      //モデルを呼び出す
+      $blog = new Blog();
+
+      //モデルのupdateメソッドを実行する（モデルのupdateメソッドは、update文を実行してブログを保存する）
+      $return = $blog->update($id,$blog_data);
+
+      header('Location: /seed_blog/blogs/index');
+     }
+
+     function delete($id){
+      //モデルを呼び出す
+      $blog = new Blog();
+
+      //モデルのdeleteメソッドを実行する（モデルのdeleteメソッドは、update文を実行してdelete_flagを1に更新する）
+      $return = $blog->delete($id);
+
+      header('Location: /seed_blog/blogs/index');
      }
    }
 ?>

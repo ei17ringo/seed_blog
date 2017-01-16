@@ -64,13 +64,40 @@
 
 		function edit($id){
 			// SQLの記述(SELECT文)
+			$sql = sprintf('SELECT * FROM `blogs` WHERE `delete_flag` = 0 AND `id` = %d',$id);
 			
 			// SQLの実行
-			
+			$results = mysqli_query($this->dbconnect, $sql) or die(mysqli_error($this->dbconnect));
+
 			// 実行結果を取得し、変数に格納
-			
+			$blog = mysqli_fetch_assoc($results);
+
 			//　取得結果を返す
+			return $blog;
 			
+		}
+
+		function update($id,$blog_data){
+			// Update文の記述
+			$sql = sprintf("UPDATE `blogs` SET `title`='%s',`body`='%s' WHERE `id` = %d;",$blog_data['title'],$blog_data['body'],$id);
+
+			// SQLの実行
+			$results = mysqli_query($this->dbconnect, $sql) or die(mysqli_error($this->dbconnect));
+
+			// 実行結果を返す
+			return $results;
+
+		}
+
+		function delete($id){
+			// Update文の記述
+			$sql = sprintf("UPDATE `blogs` SET `delete_flag`=1 WHERE `id` = %d;",$id);
+
+			// SQLの実行
+			$results = mysqli_query($this->dbconnect, $sql) or die(mysqli_error($this->dbconnect));
+
+			// 実行結果を返す
+			return $results;
 		}
 	}
 ?>
